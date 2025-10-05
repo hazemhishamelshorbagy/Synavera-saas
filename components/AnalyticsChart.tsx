@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 import { Chart, ChartConfiguration } from 'chart.js/auto'
-import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+const MotionDiv = dynamic(() => import('framer-motion').then(m => m.motion.div), { ssr: false })
 
 export function AnalyticsChart({ labels, data }: { labels: string[]; data: number[] }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -35,8 +36,8 @@ export function AnalyticsChart({ labels, data }: { labels: string[]; data: numbe
   }, [labels, data])
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+    <MotionDiv initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
       <canvas ref={canvasRef} height={120} />
-    </motion.div>
+    </MotionDiv>
   )
 }

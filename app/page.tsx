@@ -2,7 +2,8 @@ import { MetricStat } from '@/components/MetricStat'
 import { CampaignCard } from '@/components/CampaignCard'
 import { Card } from '@/components/ui/Card'
 import { demoCampaigns } from '@/data/demo'
-import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+const AIInsights = dynamic(() => import('@/components/AIInsights').then(m => m.AIInsights), { ssr: false })
 
 export default function DashboardPage() {
   const stats = [
@@ -29,13 +30,7 @@ export default function DashboardPage() {
         <div>
           <Card className="p-4">
             <div className="text-sm text-slate-500 mb-2">AI Insights</div>
-            <motion.ul initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}>
-              {['Post around 10 AM for best CTR', 'Use visuals with product screenshot', 'Try #buildinpublic'].map((tip) => (
-                <motion.li key={tip} variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0 } }} className="text-sm mb-2">
-                  • {tip}
-                </motion.li>
-              ))}
-            </motion.ul>
+            <AIInsights tips={["Post around 10 AM for best CTR", "Use visuals with product screenshot", "Try #buildinpublic"]} />
           </Card>
         </div>
       </div>

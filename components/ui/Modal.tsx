@@ -1,20 +1,22 @@
 "use client"
 
 import { ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import dynamic from 'next/dynamic'
+const AnimatePresence = dynamic(() => import('framer-motion').then(m => m.AnimatePresence), { ssr: false })
+const MotionDiv = dynamic(() => import('framer-motion').then(m => m.motion.div), { ssr: false })
 
 export function Modal({ open, onClose, children }: { open: boolean; onClose: () => void; children: ReactNode }) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
           onClick={onClose}
         >
-          <motion.div
+          <MotionDiv
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
@@ -23,8 +25,8 @@ export function Modal({ open, onClose, children }: { open: boolean; onClose: () 
             onClick={(e) => e.stopPropagation()}
           >
             {children}
-          </motion.div>
-        </motion.div>
+          </MotionDiv>
+        </MotionDiv>
       )}
     </AnimatePresence>
   )

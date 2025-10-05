@@ -1,6 +1,8 @@
 "use client"
 
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd'
+import dynamic from 'next/dynamic'
+const MotionDiv = dynamic(() => import('framer-motion').then(m => m.motion.div), { ssr: false })
 import { useState } from 'react'
 import { Button } from './ui/Button'
 
@@ -76,14 +78,15 @@ export function CalendarScheduler({ initialPosts }: { initialPosts: ScheduledPos
                   {posts.filter(p => new Date(p.date).toDateString() === cell.date.toDateString()).map((p, i) => (
                     <Draggable draggableId={p.id} index={i} key={p.id}>
                       {(dragProps) => (
-                        <div
+                        <MotionDiv
                           ref={dragProps.innerRef}
                           {...dragProps.draggableProps}
                           {...dragProps.dragHandleProps}
                           className="mb-1 rounded bg-brand/10 px-2 py-1 text-xs"
+                          whileHover={{ scale: 1.02 }}
                         >
                           {p.title}
-                        </div>
+                        </MotionDiv>
                       )}
                     </Draggable>
                   ))}

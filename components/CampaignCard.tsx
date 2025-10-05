@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+const MotionDiv = dynamic(() => import('framer-motion').then(m => m.motion.div), { ssr: false })
 import Link from 'next/link'
 import { Card } from './ui/Card'
 
@@ -18,7 +19,7 @@ export type Campaign = {
 
 export function CampaignCard({ campaign }: { campaign: Campaign }) {
   return (
-    <motion.div whileHover={{ y: -2, scale: 1.01 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+    <MotionDiv whileHover={{ y: -2, scale: 1.01 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
       <Link href={`/campaigns/${campaign.id}`}>
         <Card className="p-4">
           <div className="flex items-center justify-between">
@@ -48,6 +49,6 @@ export function CampaignCard({ campaign }: { campaign: Campaign }) {
           )}
         </Card>
       </Link>
-    </motion.div>
+    </MotionDiv>
   )
 }

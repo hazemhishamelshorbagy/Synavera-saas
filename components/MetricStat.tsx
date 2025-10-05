@@ -1,12 +1,11 @@
 "use client"
 
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Card } from './ui/Card'
 
 export function MetricStat({ label, value }: { label: string; value: number }) {
   const [count, setCount] = useState(0)
-  const controls = useAnimation()
 
   useEffect(() => {
     let raf = 0
